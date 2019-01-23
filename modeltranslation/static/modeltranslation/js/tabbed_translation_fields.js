@@ -171,8 +171,13 @@ var google, django, gettext;
                     }
                     container.find('script').remove();
                     panel = $('<div id="' + tabId + '"></div>').append(container);
-                    tab = $('<li' + (label.hasClass('required') ? ' class="required"' : '') +
-                            '><a href="#' + tabId + '">' + lang.replace('_', '-') + '</a></li>');
+                    if (lang === ORIGIN_LANGUAGE ) {
+                        tab = $('<li class="ui-tabs-selected ui-state-active ' + (label.hasClass('required') ? 'required"' : '"') +
+                                '><a href="#' + tabId + '">' + lang.replace('_', '-') + '</a></li>');
+                    } else {
+                        tab = $('<li' + (label.hasClass('required') ? ' class="required"' : '') +
+                                '><a href="#' + tabId + '">' + lang.replace('_', '-') + '</a></li>');
+                    }
                     tabsList.append(tab);
                     tabsContainer.append(panel);
                 });
@@ -359,8 +364,13 @@ var google, django, gettext;
                     });
                 });
                 $.each(this.languages, function (idx, language) {
-                    self.$select.append($('<option value="' + idx + '">' +
-                                        language.replace('_', '-') + '</option>'));
+                    if (language === ORIGIN_LANGUAGE) {
+                        self.$select.append($('<option value="' + idx + '" selected>' +
+                                            language.replace('_', '-') + '</option>'));
+                    } else {
+                        self.$select.append($('<option value="' + idx + '">' +
+                                            language.replace('_', '-') + '</option>'));
+                    }
                 });
                 this.update(tabs);
                 $('#content').find('h1').append('&nbsp;').append(self.$select);
@@ -381,6 +391,7 @@ var google, django, gettext;
 
             activateTab: function(tabs) {
                 var self = this;
+                console.log('activate tab');
                 $.each(tabs, function (idx, tab) {
                     try { //jquery ui => 1.10 api changed, we keep backward compatibility
                         tab.tabs('select', parseInt(self.$select.val(), 10));
