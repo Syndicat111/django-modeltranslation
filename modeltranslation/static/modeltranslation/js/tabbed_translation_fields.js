@@ -391,7 +391,6 @@ var google, django, gettext;
 
             activateTab: function(tabs) {
                 var self = this;
-                console.log('activate tab');
                 $.each(tabs, function (idx, tab) {
                     try { //jquery ui => 1.10 api changed, we keep backward compatibility
                         tab.tabs('select', parseInt(self.$select.val(), 10));
