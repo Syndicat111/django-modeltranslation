@@ -26,6 +26,11 @@ var google, django, gettext;
                 this.lang = clsBits[1];
                 this.id = $(this.el).attr('id');
                 this.groupId = this.buildGroupId();
+                if (typeof ORIGIN_LANGUAGE === 'undefined') {
+                    this.ORIGIN_LANGUAGE = '';
+                } else {
+                    this.ORIGIN_LANGUAGE = ORIGIN_LANGUAGE;
+                }
             };
 
             this.buildGroupId = function () {
@@ -171,7 +176,7 @@ var google, django, gettext;
                     }
                     container.find('script').remove();
                     panel = $('<div id="' + tabId + '"></div>').append(container);
-                    if (lang === ORIGIN_LANGUAGE ) {
+                    if (lang === this.ORIGIN_LANGUAGE ) {
                         tab = $('<li class="ui-tabs-selected ui-state-active ' + (label.hasClass('required') ? 'required"' : '"') +
                                 '><a href="#' + tabId + '">' + lang.replace('_', '-') + '</a></li>');
                     } else {
@@ -364,7 +369,7 @@ var google, django, gettext;
                     });
                 });
                 $.each(this.languages, function (idx, language) {
-                    if (language === ORIGIN_LANGUAGE) {
+                    if (language === this.ORIGIN_LANGUAGE) {
                         self.$select.append($('<option value="' + idx + '" selected>' +
                                             language.replace('_', '-') + '</option>'));
                     } else {
