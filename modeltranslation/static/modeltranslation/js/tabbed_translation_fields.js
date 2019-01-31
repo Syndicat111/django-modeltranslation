@@ -3,8 +3,8 @@
 var google, django, gettext;
 
 (function () {
-    var jQuery = window.jQuery || $ || django.jQuery;
 
+    var jQuery = window.jQuery || $ || django.jQuery;
     /* Add a new selector to jQuery that excludes parent items which match a given selector */
     jQuery.expr[':'].parents = function(a, i, m) {
         return jQuery(a).parents(m[3]).length < 1;
@@ -26,11 +26,6 @@ var google, django, gettext;
                 this.lang = clsBits[1];
                 this.id = $(this.el).attr('id');
                 this.groupId = this.buildGroupId();
-                if (typeof ORIGIN_LANGUAGE === 'undefined') {
-                    this.ORIGIN_LANGUAGE = '';
-                } else {
-                    this.ORIGIN_LANGUAGE = ORIGIN_LANGUAGE;
-                }
             };
 
             this.buildGroupId = function () {
@@ -176,7 +171,12 @@ var google, django, gettext;
                     }
                     container.find('script').remove();
                     panel = $('<div id="' + tabId + '"></div>').append(container);
-                    if (lang === this.ORIGIN_LANGUAGE ) {
+                    if (typeof ORIGIN_LANGUAGE === 'undefined') {
+                        var OL = '';
+                    } else {
+                        var OL = ORIGIN_LANGUAGE;
+                    }
+                    if (lang === OL) {
                         tab = $('<li class="ui-tabs-selected ui-state-active ' + (label.hasClass('required') ? 'required"' : '"') +
                                 '><a href="#' + tabId + '">' + lang.replace('_', '-') + '</a></li>');
                     } else {
@@ -369,7 +369,12 @@ var google, django, gettext;
                     });
                 });
                 $.each(this.languages, function (idx, language) {
-                    if (language === this.ORIGIN_LANGUAGE) {
+                    if (typeof ORIGIN_LANGUAGE === 'undefined') {
+                        var OL = '';
+                    } else {
+                        var OL = ORIGIN_LANGUAGE;
+                    }
+                    if (language === OL) {
                         self.$select.append($('<option value="' + idx + '" selected>' +
                                             language.replace('_', '-') + '</option>'));
                     } else {
